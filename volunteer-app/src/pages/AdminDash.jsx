@@ -8,8 +8,11 @@ import {
   TableCell,
   TableBody,
   Fab,
+  Button,
+  Stack,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Link } from 'react-router-dom';
 import EventForm from '../components/EventForm';
 
 export default function AdminDash() {
@@ -33,6 +36,19 @@ export default function AdminDash() {
       <Typography variant="h4" gutterBottom>
         Admin Dashboard
       </Typography>
+
+      {/* Navigation Buttons */}
+      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+        <Button variant="outlined" component={Link} to="/match">
+          Volunteer Match
+        </Button>
+        <Button variant="outlined" component={Link} to="/notifications">
+          Notifications
+        </Button>
+        <Button variant="outlined" component={Link} to="/history">
+          Event History
+        </Button>
+      </Stack>
 
       {/* Events Table */}
       <Table>
