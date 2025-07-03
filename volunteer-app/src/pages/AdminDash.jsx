@@ -1,5 +1,8 @@
 import React from 'react';
 import {
+  AppBar,
+  Toolbar,
+  Button,
   Container,
   Typography,
   Table,
@@ -8,13 +11,14 @@ import {
   TableCell,
   TableBody,
   Fab,
-  Button,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom';
 import EventForm from '../components/EventForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminDash() {
+  const navigate = useNavigate();
+
   const [events, setEvents] = React.useState([
     { id: 1, title: 'Food Drive', date: '2024-07-01', location: 'Midtown', volunteers: 5 },
     { id: 2, title: 'Clothing Distribution', date: '2024-07-05', location: 'East Side', volunteers: 10 },
@@ -31,66 +35,68 @@ export default function AdminDash() {
   };
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Admin Dashboard
-      </Typography>
+    <>
+      {/* Top Nav Bar */}
+      <AppBar position="static">
+        <Toolbar>
+          <Button color="inherit" onClick={() => navigate('/admin')}>
+            Dashboard
+          </Button>
+          <Button color="inherit" onClick={() => navigate('/match')}>
+            Match Volunteers
+          </Button>
+          <Button color="inherit" onClick={() => navigate('/notifications')}>
+            Notifications
+          </Button>
+          <Button color="inherit" onClick={() => navigate('/history')}>
+            Event History
+          </Button>
+        </Toolbar>
+      </AppBar>
 
-      {/* Navigation Buttons */}
-      <div style={{ marginBottom: '20px' }}>
-        <Button component={Link} to="/" variant="outlined" sx={{ mr: 2 }}>
-          Login
-        </Button>
-        <Button component={Link} to="/volunteer" variant="outlined" sx={{ mr: 2 }}>
-          Volunteer Dashboard
-        </Button>
-        <Button component={Link} to="/match" variant="outlined" sx={{ mr: 2 }}>
-          Match Volunteers
-        </Button>
-        <Button component={Link} to="/notifications" variant="outlined" sx={{ mr: 2 }}>
-          Notifications
-        </Button>
-        <Button component={Link} to="/history" variant="outlined">
-          History
-        </Button>
-      </div>
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Admin Dashboard
+        </Typography>
 
-      {/* Events Table */}
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Event Title</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Location</TableCell>
-            <TableCell>Volunteers Needed</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {events.map((event) => (
-            <TableRow key={event.id}>
-              <TableCell>{event.title}</TableCell>
-              <TableCell>{event.date}</TableCell>
-              <TableCell>{event.location}</TableCell>
-              <TableCell>{event.volunteers}</TableCell>
+        {/* Events Table */}
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Event Title</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Location</TableCell>
+              <TableCell>Volunteers Needed</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {events.map((event) => (
+              <TableRow key={event.id}>
+                <TableCell>{event.title}</TableCell>
+                <TableCell>{event.date}</TableCell>
+                <TableCell>{event.location}</TableCell>
+                <TableCell>{event.volunteers}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
 
-      {/* Show Form */}
-      {showForm && (
-        <EventForm onClose={() => setShowForm(false)} onSubmit={handleAddEvent} />
-      )}
+        {/* Event Form */}
+        {showForm && (
+          <EventForm onClose={() => setShowForm(false)} onSubmit={handleAddEvent} />
+        )}
 
-      {/* Floating Action Button */}
-      <Fab
-        color="primary"
-        aria-label="add"
-        sx={{ position: 'fixed', bottom: 24, right: 24 }}
-        onClick={() => setShowForm(true)}
-      >
-        <AddIcon />
-      </Fab>
-    </Container>
+        {/* Floating Action Button */}
+        <Fab
+          color="primary"
+          aria-label="add"
+          sx={{ position: 'fixed', bottom: 24, right: 24 }}
+          onClick={() => setShowForm(true)}
+        >
+          <AddIcon />
+        </Fab>
+      </Container>
+    </>
   );
 }
+
