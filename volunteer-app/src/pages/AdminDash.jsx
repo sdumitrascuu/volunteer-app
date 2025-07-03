@@ -9,7 +9,6 @@ import {
   TableBody,
   Fab,
   Button,
-  Stack,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
@@ -38,17 +37,23 @@ export default function AdminDash() {
       </Typography>
 
       {/* Navigation Buttons */}
-      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
-        <Button variant="outlined" component={Link} to="/match">
-          Volunteer Match
+      <div style={{ marginBottom: '20px' }}>
+        <Button component={Link} to="/" variant="outlined" sx={{ mr: 2 }}>
+          Login
         </Button>
-        <Button variant="outlined" component={Link} to="/notifications">
+        <Button component={Link} to="/volunteer" variant="outlined" sx={{ mr: 2 }}>
+          Volunteer Dashboard
+        </Button>
+        <Button component={Link} to="/match" variant="outlined" sx={{ mr: 2 }}>
+          Match Volunteers
+        </Button>
+        <Button component={Link} to="/notifications" variant="outlined" sx={{ mr: 2 }}>
           Notifications
         </Button>
-        <Button variant="outlined" component={Link} to="/history">
-          Event History
+        <Button component={Link} to="/history" variant="outlined">
+          History
         </Button>
-      </Stack>
+      </div>
 
       {/* Events Table */}
       <Table>
