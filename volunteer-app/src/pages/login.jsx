@@ -133,14 +133,10 @@ export default function Login() {
   });
   
   const [registerData, setRegisterData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
     userType: 'volunteer',
-    location: '',
-    skills: '',
     agreeToTerms: false
   });
 
@@ -187,8 +183,7 @@ export default function Login() {
     setError('');
     
     try {
-      if (!registerData.firstName || !registerData.lastName || !registerData.email || 
-          !registerData.password || !registerData.location) {
+      if (!registerData.email || !registerData.password) {
         throw new Error('Please fill in all required fields');
       }
       
@@ -201,20 +196,17 @@ export default function Login() {
       }
       
       await new Promise(resolve => setTimeout(resolve, 2000));
-      setSuccess('Account created successfully! Please check your email to verify your account.');
+      setSuccess('Account created successfully! Please log in to complete your profile.');
       
       setTimeout(() => {
         setRegisterData({
-          firstName: '',
-          lastName: '',
           email: '',
           password: '',
           confirmPassword: '',
           userType: 'volunteer',
-          location: '',
-          skills: '',
           agreeToTerms: false
         });
+        setTabValue(0); // Switch to login tab
       }, 2000);
       
     } catch (err) {
@@ -424,23 +416,6 @@ export default function Login() {
                 </Box>
               </Box>
 
-              <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <TextField
-                  fullWidth
-                  label="First Name"
-                  value={registerData.firstName}
-                  onChange={(e) => handleInputChange('register', 'firstName', e.target.value)}
-                  required
-                />
-                <TextField
-                  fullWidth
-                  label="Last Name"
-                  value={registerData.lastName}
-                  onChange={(e) => handleInputChange('register', 'lastName', e.target.value)}
-                  required
-                />
-              </Box>
-
               <TextField
                 fullWidth
                 type="email"
@@ -450,29 +425,6 @@ export default function Login() {
                 sx={{ mb: 2 }}
                 required
               />
-
-              <TextField
-                fullWidth
-                label="Location (City, State)"
-                value={registerData.location}
-                onChange={(e) => handleInputChange('register', 'location', e.target.value)}
-                placeholder="e.g., Houston, TX"
-                sx={{ mb: 2 }}
-                required
-              />
-
-              {registerData.userType === 'volunteer' && (
-                <TextField
-                  fullWidth
-                  label="Skills & Interests"
-                  placeholder="e.g., First Aid, Event Planning, Teaching"
-                  value={registerData.skills}
-                  onChange={(e) => handleInputChange('register', 'skills', e.target.value)}
-                  sx={{ mb: 2 }}
-                  multiline
-                  rows={2}
-                />
-              )}
 
               <TextField
                 fullWidth
@@ -514,7 +466,7 @@ export default function Login() {
                     </InputAdornment>
                   )
                 }}
-                sx={{ mb: 2 }}
+                sx={{ mb: 3 }}
                 required
               />
 
@@ -574,7 +526,7 @@ export default function Login() {
 
           <Box textAlign="center" sx={{ mt: 3, pt: 2, borderTop: '1px solid #e0e6ed' }}>
             <Typography variant="body2" sx={{ color: '#666666' }}>
-              By continuing, you agree to help build stronger communities through volunteering
+              After registration, you'll complete your profile with address, skills, and availability details
             </Typography>
           </Box>
         </StyledPaper>
