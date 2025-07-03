@@ -15,7 +15,7 @@ import {
 const skillsOptions = ['First Aid', 'Cooking', 'Driving', 'Event Setup', 'Translation'];
 const urgencyOptions = ['Low', 'Medium', 'High'];
 
-export default function EventForm({ onClose }) {
+export default function EventForm({ onClose, onSubmit }) {
   const [eventData, setEventData] = React.useState({
     title: '',
     description: '',
@@ -32,8 +32,7 @@ export default function EventForm({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitted Event:', eventData);
-    onClose(); // Close the form (callback from parent)
+    onSubmit(eventData); // Pass data to AdminDash
   };
 
   return (
@@ -123,6 +122,10 @@ export default function EventForm({ onClose }) {
 
       <Button type="submit" variant="contained" sx={{ mt: 2 }}>
         Save Event
+      </Button>
+
+      <Button onClick={onClose} sx={{ mt: 1, ml: 2 }}>
+        Cancel
       </Button>
     </Box>
   );
