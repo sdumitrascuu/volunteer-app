@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Container,
   Typography,
-  Button,
   Table,
   TableHead,
   TableRow,
@@ -22,7 +21,10 @@ export default function AdminDash() {
   const [showForm, setShowForm] = React.useState(false);
 
   const handleAddEvent = (newEvent) => {
-    setEvents((prevEvents) => [...prevEvents, { ...newEvent, id: prevEvents.length + 1 }]);
+    setEvents((prevEvents) => [
+      ...prevEvents,
+      { ...newEvent, id: prevEvents.length + 1, volunteers: 0 },
+    ]);
     setShowForm(false);
   };
 
@@ -54,10 +56,12 @@ export default function AdminDash() {
         </TableBody>
       </Table>
 
-      {/* Show Form if Toggled */}
-      {showForm && <EventForm onClose={() => setShowForm(false)} onSubmit={handleAddEvent} />}
+      {/* Show Form */}
+      {showForm && (
+        <EventForm onClose={() => setShowForm(false)} onSubmit={handleAddEvent} />
+      )}
 
-      {/* Add Event Button */}
+      {/* Floating Action Button */}
       <Fab
         color="primary"
         aria-label="add"
