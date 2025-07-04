@@ -135,28 +135,97 @@ export default function VolunteerDash() {
       <Dialog open={openEdit} onClose={() => setOpenEdit(false)} fullWidth maxWidth="sm">
         <DialogTitle>Edit Profile</DialogTitle>
         <DialogContent dividers>
-          <TextField
-            fullWidth
-            label="Name"
-            sx={{ mb: 2 }}
-            value={editDraft.name}
-            onChange={(e) => setEditDraft({ ...editDraft, name: e.target.value })}
-          />
-          <TextField
-            fullWidth
-            label="Location"
-            sx={{ mb: 2 }}
-            value={editDraft.location}
-            onChange={(e) => setEditDraft({ ...editDraft, location: e.target.value })}
-          />
-          <TextField
-            fullWidth
-            label="Skills (comma-separated)"
-            value={editDraft.skills.join(', ')}
-            onChange={(e) =>
-              setEditDraft({ ...editDraft, skills: e.target.value.split(',').map((s) => s.trim()) })
-            }
-          />
+            <TextField
+                fullWidth
+                label="Full Name"
+                sx={{ mb: 2 }}
+                inputProps={{ maxLength: 50 }}
+                value={editDraft.name}
+                onChange={(e) => setEditDraft({ ...editDraft, name: e.target.value })}
+                required
+            />
+            <TextField
+                fullWidth
+                label="Address 1"
+                sx={{ mb: 2 }}
+                inputProps={{ maxLength: 100 }}
+                value={editDraft.address1 || ''}
+                onChange={(e) => setEditDraft({ ...editDraft, address1: e.target.value })}
+                required
+            />
+            <TextField
+                fullWidth
+                label="Address 2"
+                sx={{ mb: 2 }}
+                inputProps={{ maxLength: 100 }}
+                value={editDraft.address2 || ''}
+                onChange={(e) => setEditDraft({ ...editDraft, address2: e.target.value })}
+            />
+            <TextField
+                fullWidth
+                label="City"
+                sx={{ mb: 2 }}
+                inputProps={{ maxLength: 100 }}
+                value={editDraft.city || ''}
+                onChange={(e) => setEditDraft({ ...editDraft, city: e.target.value })}
+                required
+            />
+            <TextField
+                fullWidth
+                select
+                label="State"
+                sx={{ mb: 2 }}
+                value={editDraft.state || ''}
+                onChange={(e) => setEditDraft({ ...editDraft, state: e.target.value })}
+                required
+                SelectProps={{ native: true }}
+            >
+                <option value="">Select State</option>
+                {[
+                'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
+                ].map((code) => (
+                <option key={code} value={code}>{code}</option>
+                ))}
+            </TextField>
+            <TextField
+                fullWidth
+                label="Zip Code"
+                sx={{ mb: 2 }}
+                inputProps={{ maxLength: 9 }}
+                value={editDraft.zip || ''}
+                onChange={(e) => setEditDraft({ ...editDraft, zip: e.target.value })}
+                required
+            />
+            <TextField
+                fullWidth
+                label="Skills (comma-separated)"
+                sx={{ mb: 2 }}
+                value={editDraft.skills.join(', ')}
+                onChange={(e) =>
+                setEditDraft({ ...editDraft, skills: e.target.value.split(',').map((s) => s.trim()) })
+                }
+                required
+            />
+            <TextField
+                fullWidth
+                label="Preferences"
+                sx={{ mb: 2 }}
+                multiline
+                rows={3}
+                value={editDraft.preferences || ''}
+                onChange={(e) => setEditDraft({ ...editDraft, preferences: e.target.value })}
+            />
+            <TextField
+                fullWidth
+                label="Availability Dates (comma-separated)"
+                helperText="Example: 2024-07-04, 2024-07-10"
+                sx={{ mb: 2 }}
+                value={editDraft.availability?.join(', ') || ''}
+                onChange={(e) =>
+                setEditDraft({ ...editDraft, availability: e.target.value.split(',').map((d) => d.trim()) })
+                }
+                required
+            />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
