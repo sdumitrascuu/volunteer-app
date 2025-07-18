@@ -1,5 +1,6 @@
 console.log("VolunteerDash Loaded");
-import {useState} from 'react';
+import { useEffect, useState } from 'react';
+
 import{
     Container,
     Box,
@@ -41,10 +42,21 @@ export default function VolunteerDash() {
         { id: 2, title: 'Library Organizer', date: 'June 5, 2025', hours: 2},
     ]);
     
-    const [notifications] = useState([
-        ' You are confirmed for Beach Cleanup Tomorrow 9 AM.',
-        ' New Event Added: Park Restoration - needs 6 more volunteers.',
-    ]);
+    const [notifications, setNotifications] = useState([]);
+    const [loadingNotifications, setLoadingNotifications] = useState(true);
+    
+    useEffect(() => {
+      fetch('http://localhost:3001/api/notifications')
+        .then((res) => res.json())
+        .then((data) => {
+          setNotifications(data);
+          setLoadingNotifications(false);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch notifications:', err);
+          setLoadingNotifications(false);
+        });
+    }, []);
     
     const [openEdit, setOpenEdit] = useState(false);
     const [editDraft, setEditDraft] = useState(user);
@@ -99,11 +111,16 @@ export default function VolunteerDash() {
           <NotificationsActive color="primary" sx={{ mr: 1 }} />
           <Typography variant="h6">Notifications</Typography>
         </Box>
-        {notifications.map((note, idx) => (
-          <Typography key={idx} variant="body2" sx={{ mb: 0.5 }}>
-            • {note}
-          </Typography>
-        ))}
+        {loadingNotifications ? (
+          <Typography variant="body2">Loading notifications...</Typography>
+        ) : (
+          notifications.map((note) => (
+            <Typography key={note.id} variant="body2" sx={{ mb: 0.5 }}>
+              • {note.message}
+            </Typography>
+          ))
+        )}
+
       </Paper>
 
       {/* upcoming events */}
