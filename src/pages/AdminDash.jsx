@@ -1,4 +1,3 @@
-AdminDash.jsx :
 
 import React from 'react';
 import {
@@ -52,6 +51,10 @@ export default function AdminDash() {
           </Button>
           <Button color="inherit" onClick={() => navigate('/history')}>
             Event History
+          </Button>
+          {/* ↓↓↓ NEW BUTTON ↓↓↓ */}
+          <Button color="inherit" onClick={() => navigate('/reports')}>
+            Reports
           </Button>
         </Toolbar>
       </AppBar>
